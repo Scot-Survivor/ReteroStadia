@@ -31,7 +31,10 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('RetroStadia_DEBUG') == 'True'
 
-ALLOWED_HOSTS = [].extend(os.environ.get('RetroStadia_ALLOWED_HOSTS').split(','))
+if not DEBUG:
+    ALLOWED_HOSTS = [].extend(os.environ.get('RetroStadia_ALLOWED_HOSTS', "").split(','))
+else:
+    ALLOWED_HOSTS = ['*']
 
 
 # Application definition
