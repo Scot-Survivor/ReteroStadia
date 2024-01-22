@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from pathlib import Path
 
@@ -20,12 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(-7xt#$4pj52*l_q3%&r&^ul9nk0)a0fv501f(74$@&yc&d5kr'
+SECRET_KEY = os.environ.get('RetroStadia_SECRET_KEY')
+if not SECRET_KEY:
+    raise ValueError("No SECRET_KEY set for RetroStadia project. Did you forget to set it in your .env file?")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('RetroStadia_DEBUG') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [].extend(os.environ.get('RetroStadia_ALLOWED_HOSTS').split(','))
 
 
 # Application definition
